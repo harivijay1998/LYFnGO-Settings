@@ -7,8 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 #root{
-  margin:auto;
+  margin:0,auto;
   max-width: 1536px;
+
 }
 
 code {

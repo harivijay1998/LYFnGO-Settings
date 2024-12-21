@@ -2,6 +2,10 @@ import {createTheme, ThemeProvider} from '@mui/material/styles'
 
 import {BrowserRouter as Router , Route, Routes , Link } from 'react-router-dom'
 import Signin from './Components/Signin';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Home from './Components/Home';
+
 
 
 const theme = createTheme({
@@ -26,13 +30,14 @@ const theme = createTheme({
 
 function App() {
   return (
-    <div>
+      <ThemeProvider theme={theme}>
       <Router>
         <Routes>
           <Route path='/' element={<Signin/>}/>
+          <Route path='/home' element={<Home/>}/>
         </Routes>
       </Router>
-    </div>
+      </ThemeProvider>
   );
 }
 
