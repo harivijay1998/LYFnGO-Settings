@@ -1,33 +1,42 @@
-import React, { useState } from 'react';
-import Dashboard from './Dashboard'; 
-import SideBar from './SideBar';
-import { Box, Typography } from '@mui/material';
+import React from "react";
+import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import SideBar from "./SideBar";
+import AppHeader from "./Appheader"; // Make sure the header file name is correct.
 
 const Home = () => {
-  const [activeView, setActiveView] = useState(<Dashboard />); 
-
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '90vh',
-        overflow: 'hidden',
-        maxWidth: '1530px',
-        margin: '0 auto',
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        overflow: "hidden",
       }}
     >
-      <Box sx={{ display: 'flex', flexGrow: 1, overflow: 'hidden' }}>
-        <SideBar setActiveView={setActiveView} />
+      <Box sx={{ flexShrink: 0 }}>
+        <AppHeader />
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexGrow: 1,
+          overflow: "hidden",
+        }}
+      >
+        <SideBar />
+
         <Box
           sx={{
             flexGrow: 1,
-            transition: 'margin-left 0.3s ease',
-            backgroundColor: '#f5f5f5',
-            height: '100%',
-            overflowX: 'hidden',
+            backgroundColor: "#f5f5f5",
+            height: "100%",
+            overflowX: "hidden",
+            padding: "20px",
           }}
         >
+          <Outlet />
         </Box>
       </Box>
     </Box>

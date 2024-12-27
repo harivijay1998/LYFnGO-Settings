@@ -110,7 +110,7 @@ const Signin = () => {
     onSubmit: (values) => {
       setSnackbarmsg("Login successfully");
       setSnackbaropen(true);
-      navigate("/settings")
+      navigate("/home")
     },
   });
 
