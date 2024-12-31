@@ -10,7 +10,6 @@ import Patients from './Components/Patients';
 import DashboardAI from './Components/DashboardAI';
 import Profile from './Components/Profile';
 import Pharmarcy from './Components/Pharmarcy';
-import Settings from './Components/Settings';
 import Channels from './Components/Channels';
 import Leads from './Components/Leads';
 import Inventory from './Components/Inventory';
@@ -18,6 +17,7 @@ import Products from './Components/Products';
 import Expenses from './Components/Expenses';
 import Events from './Components/Events';
 import Consults from './Components/Consults';
+import Settings from './Settings';
 
 const theme = createTheme({
   palette: {
@@ -28,7 +28,7 @@ const theme = createTheme({
       main: "#f0ffff",
     },
     background: {
-      default: "f6f7f9",
+      default: "#f6f7f9",
     },
   },
   typography: {
