@@ -18,6 +18,7 @@ import Expenses from './Components/Expenses';
 import Events from './Components/Events';
 import Consults from './Components/Consults';
 import Settings from './Settings';
+import { TemplateContext, TemplateProvider } from './Settings/TemplateContext';
 
 const theme = createTheme({
   palette: {
@@ -39,6 +40,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <TemplateProvider>
       <Router>
       <Routes>
   <Route path="/" element={<Signin />} />
@@ -61,6 +63,7 @@ function App() {
 </Routes>
 
       </Router>
+      </TemplateProvider>
     </ThemeProvider>
   );
 }

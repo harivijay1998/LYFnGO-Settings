@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Typography, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import AddIcon from "@mui/icons-material/Add";
-import AddTemplateForm from "../MainContent/AddTemplate";
+import AddTemplateForm from "./AddTemplate";
+import DisplayCard from "../MainContent/WhatsApp";
+import { useTemplateContext } from "../TemplateContext";
 
 const SettingsHeader = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const {templateData,showCreateTemplate,setShowCreateTemplate,editingTemplate} = useTemplateContext()
+  const handleOpen = () => setShowCreateTemplate(true);
+  const handleClose = () => setShowCreateTemplate(false);  
 
   return (
     <>
@@ -21,7 +22,7 @@ const SettingsHeader = () => {
           backgroundColor: "#007bff",
           color: "white",
           padding: "5px 20px",
-          width: "92%",
+          width: "100%",
           marginBlockStart: "-20px",
         }}
       >
@@ -77,17 +78,16 @@ const SettingsHeader = () => {
         </Button>
       </Box>
 
-      <Dialog open={open} onClose={handleClose} maxWidth='lg' fullWidth sx={{borderRadius:'30px'}} >
-        <DialogTitle sx={{textAlign:'left' , backgroundColor:'#007bff' , color:'#fff'}}>Create WhatsApp Template</DialogTitle>
-        <DialogContent dividers>
-          <AddTemplateForm onCancel={handleClose} />
+      <Dialog open={showCreateTemplate} onClose={handleClose} maxWidth="lg" fullWidth>
+        <DialogTitle>Create WhatsApp Template</DialogTitle>
+        <DialogContent>
+          <AddTemplateForm onCancel={handleClose} data={editingTemplate} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
+          <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
+      
     </>
   );
 };

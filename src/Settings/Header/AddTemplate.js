@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import {
   Box,
   Button,
@@ -22,23 +22,30 @@ import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import DescriptionIcon from "@mui/icons-material/Description";
+import { useTemplateContext } from "../TemplateContext";
 
-const AddTemplateForm = ({ onCancel }) => {
+
+const AddTemplateForm = (props) => {
+  const { addTemplate , updateTemplate} = useTemplateContext(); 
+  const { onSubmit, onCancel, data } = props
+  console.log('xxxdata',data)
   const editableRef = useRef(null);
   const [mediaFiles, setMediaFiles] = useState([]);
   const [headerType, setHeaderType] = useState("None");
 
   const formik = useFormik({
     initialValues: {
-      templateName: "",
-      category: "",
-      language: "",
-      header: "None",
-      body: "",
-      footer: "",
+      templateName: data ? data.templateName : "",  
+      templateType: data ? data.templateType : "",
+      category: data ? data.category : "",
+      language: data ? data.language : "",
+      header: data ? data.header : "None",
+      body: data ? data.body : "",
+      footer: data ? data.footer : "",
     },
     validationSchema: Yup.object({
       templateName: Yup.string().required("Template name is required"),
+      templateType: Yup.string().required("Template type is required"),
       category: Yup.string().required("Category is required"),
       language: Yup.string().required("Language is required"),
       body: Yup.string()
@@ -46,10 +53,15 @@ const AddTemplateForm = ({ onCancel }) => {
         .required("Body is required"),
     }),
     onSubmit: (values) => {
-      values.mediaFiles = mediaFiles;
-    }
+      console.log("Formik onSubmit values:", values); 
+      if (data) {
+        updateTemplate(values);  
+      } else {
+        addTemplate(values);
+      }
+    },
   });
-
+console.log('eee',formik?.errors)
   const handleFileUpload = (event, type) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -156,18 +168,18 @@ const AddTemplateForm = ({ onCancel }) => {
               >
                 <InputLabel>Template Type*</InputLabel>
                 <Select
-                  name="category"
-                  value={formik.values.category}
+                  name="templateType"
+                  value={formik.values.templateType}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  error={formik.touched.category && Boolean(formik.errors.category)}
+                  error={formik.touched.templateType && Boolean(formik.errors.templateType)}
                   sx={{
                     marginBottom: 2,
                     width: "400px",
                   }}
                 >
-                  <MenuItem value="Marketing">Marketing</MenuItem>
-                  <MenuItem value="Support">Support</MenuItem>
+                  <MenuItem value="Communication">Communication</MenuItem>
+                  <MenuItem value="Diet Plan">Diet Plan</MenuItem>
                   <MenuItem value="Others">Others</MenuItem>
                 </Select>
               </FormControl>
@@ -361,9 +373,9 @@ const AddTemplateForm = ({ onCancel }) => {
         />
 
         <Box display="flex" justifyContent="flex-end" gap={2} mt={2}>
-          <Button variant="contained" type="submit">
-            Save
-          </Button>
+        <Button variant="contained" type="submit">
+          {data ? "Update" : "Save"}
+        </Button>
           <Button variant="outlined" onClick={onCancel}>
             Cancel
           </Button>
